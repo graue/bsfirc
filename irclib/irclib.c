@@ -124,7 +124,8 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 	IRCLIB_RET      ret = IRCLIB_RET_OK;
 
 	size_t          bytesread, bytesparsed;
-	size_t          nextcr;
+	size_t          nextcr, nextnl;
+	int             nocr;
 	int             maxfd = nfds;
 	unsigned char   recvbuf[513];
 	unsigned char  *bufptr, *messagestr;
@@ -179,7 +180,18 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 
 			while (bytesparsed < tmp->handle->data_len) {
 				nextcr = chrdist((char *) bufptr, '\r');
-				
+				nextnl = chrdist((char *) bufptr, '\n');
+
+				/* Some servers omit the \r after certain
+				   messages. */
+				if (nextnl < nextcr)
+				{
+					nextcr = nextnl;
+					nocr = 1;
+				}
+				else
+					nocr = 0;
+
 				if (nextcr == 0) {
 					tmp->handle->buffered = malloc(tmp->handle->data_len - bytesparsed + 1);
 					tmp->handle->waiting_len = tmp->handle->data_len - bytesparsed;
@@ -191,8 +203,8 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 				memcpy(messagestr, bufptr, nextcr);
 				messagestr[nextcr] = 0;
 
-				bytesparsed += nextcr + 2;
-				bufptr += nextcr + 2;
+				bytesparsed += nextcr + 1 + !nocr;
+				bufptr += nextcr + 1 + !nocr;
 
 				parse_message(tmp->handle, (char *)messagestr);
 				free(messagestr);
