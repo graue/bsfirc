@@ -233,7 +233,7 @@ parse_input(void)
 #else
 			wordwrap_print(pptr + 1, offset);
 #endif
-			log_event(EVENT_PRIVMSG, dest, NULL, NULL, pptr + 1);
+			log_event(EVENT_SENDPRIVMSG, dest, NULL, NULL, pptr+1);
 		}
 
 		free(dest);
