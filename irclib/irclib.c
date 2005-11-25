@@ -183,7 +183,8 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 				nextnl = chrdist((char *) bufptr, '\n');
 
 				/* Some servers omit the \r after certain
-				   messages. */
+				 * messages.
+				 */
 				if (nextnl < nextcr)
 				{
 					nextcr = nextnl;

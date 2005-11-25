@@ -108,8 +108,9 @@ irclib_connect(void *handle, char *server, uint16_t port)
 #endif
 
 	/* The hostname and servername sent here are typically unused.
-	   However, if we send "x", some servers detect us as a spambot
-	   and refuse the connection, so we reuse the username instead. */
+	 * However, if we send "x", some servers detect us as a spambot
+	 * and refuse the connection, so we reuse the username instead.
+	 */
 	connectpkt = pkt_init(5 + strlen(hptr->username) + 1 +
 			      strlen(hptr->username) + 1 +
 			      strlen(hptr->username) + 1 +
