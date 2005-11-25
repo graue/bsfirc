@@ -1,4 +1,5 @@
 #include "bsfirc.h"
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -82,9 +83,11 @@ log_event(int event_type, char *name, char *host, char *chan, char *msg)
 {
 	FILE           *logfile;
 	char            user_log[PATH_MAX];
+	char            lcname[512];
 	char            ts[21];
 	struct tm      *now;
 	time_t          t;
+	int             i;
 
 	if (!logging)
 		return;
@@ -92,10 +95,17 @@ log_event(int event_type, char *name, char *host, char *chan, char *msg)
 	if(event_type == EVENT_CHANMSG ||
            event_type == EVENT_CHANJOIN ||
 	   event_type == EVENT_CHANPART ||
-	   event_type == EVENT_QUIT)
-		sprintf(user_log, "%s/%s.log", logpath, chan);
-	else	
+	   event_type == EVENT_QUIT) {
+		for (i = 0; chan[i] && i < sizeof (lcname) - 1; i++)
+			lcname[i] = tolower(chan[i]);
+		lcname[i] = '\0';
+		sprintf(user_log, "%s/%s.log", logpath, lcname);
+	} else {
+		for (i = 0; chan[i] && i < sizeof (lcname) - 1; i++)
+			lcname[i] = tolower(name[i]);
+		lcname[i] = '\0';
 		sprintf(user_log, "%s/%s.log", logpath, name);
+	}
 
 	logfile = fopen(user_log, "a");
 	if (logfile == NULL)
