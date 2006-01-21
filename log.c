@@ -104,7 +104,7 @@ log_event(int event_type, char *name, char *host, char *chan, char *msg)
 		for (i = 0; name[i] && i < sizeof (lcname) - 1; i++)
 			lcname[i] = tolower(name[i]);
 		lcname[i] = '\0';
-		sprintf(user_log, "%s/%s.log", logpath, name);
+		sprintf(user_log, "%s/%s.log", logpath, lcname);
 	}
 
 	logfile = fopen(user_log, "a");
