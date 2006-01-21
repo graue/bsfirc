@@ -13,6 +13,8 @@ int
 main(int argc, char **argv)
 {
 	char           *ircsrv, *ircnick, *ircname, *user;
+	char           *p;
+	int             portnumber;
 	fd_set          readfs;
 	struct timeval  tm;
 
@@ -36,6 +38,18 @@ main(int argc, char **argv)
 	if (ircname == NULL) {
 		ircname = strdup("bsfirc user");
 	}
+
+	/*
+	 * Read a port number, or use 6667 by default.
+	 */
+	if ((p = strchr(ircsrv, ':')) != NULL) {
+		portnumber = atoi(&p[1]);
+		if (portnumber < 1 || portnumber > 65535)
+			portnumber = 6667; /* TODO: error message */
+		*p = '\0';
+	} else
+		portnumber = 6667;
+
 	setup_tty();
 	get_screen_size();
 
@@ -96,8 +110,8 @@ main(int argc, char **argv)
 	open_log_dir();
 
 	printf("** bsfirc started.\n");
-	printf("** Server set to %s.\n", ircsrv);
-	irclib_connect(bsfirc->handle, ircsrv, 6667);
+	printf("** Server set to %s, port %d.\n", ircsrv, portnumber);
+	irclib_connect(bsfirc->handle, ircsrv, portnumber);
 
 	while (!irclib_connected(bsfirc->handle));
 	printf("** Connected.\n");
