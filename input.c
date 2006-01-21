@@ -279,6 +279,7 @@ parse_input(void)
 		printf("   i<nick>        : whois <nick>\n");
 		printf("   W              : show your nickname and server\n");
 		printf("   o<nick>        : op <nick> on current channel\n");
+		printf("   n<nick>        : change your nick to <nick>\n");
 		printf("   q!             : quit");
 	}
 	printf("\n");
