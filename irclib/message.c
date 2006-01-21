@@ -194,33 +194,33 @@ parse_numeric(void *handle, char *message, split_t *tokens, int numeric)
 	size_t x;
 
 	switch (numeric) {
-	case 001:
+	case 001: /* server name */
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_SERVER_NAME] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_SERVER_NAME] (handle, tok[0]+1);
 		break;
-	case 311:
+	case 311: /* RPL_WHOISUSER */
 		datastart = (unsigned char *) strchr((char *) message + 1, ':');
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_WHOIS_USERHOST] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_WHOIS_USERHOST] (handle, tok[3], tok[4], tok[5], datastart+1);
 		break;
-	case 312:
+	case 312: /* RPL_WHOISSERVER */
 		datastart = (unsigned char *) strchr((char *) message + 1, ':');
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_WHOIS_SERVER] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_WHOIS_SERVER] (handle, tok[3], tok[4], datastart+1);
 		break;
-	case 319:
+	case 319: /* RPL_WHOISCHANNELS */
 		datastart = (unsigned char *) strchr((char *) message + 1, ':');
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_WHOIS_CHANNELS] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_WHOIS_CHANNELS] (handle, tok[3], datastart+1);
 		break;
-	case 332:
+	case 332: /* RPL_TOPIC */
 		datastart = (unsigned char *) strchr((char *) message + 1, ':');
 
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_TOPIC] != NULL && datastart != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_TOPIC] (handle, tok[3], datastart+1);
 
 		break;
-	case 353:
+	case 353: /* RPL_NAMREPLY */
 		chan = tok[4];
 		for(x = 5; x < (tokens->num-1); x++) {
 			if(((IRCLIB *)handle)->callbacks[IRCLIB_CHANUSER] != NULL) {
@@ -231,15 +231,15 @@ parse_numeric(void *handle, char *message, split_t *tokens, int numeric)
 			}
 		}
 		break;
-	case 366:
+	case 366: /* RPL_ENDOFNAMES */
 		chan = tok[3];
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_NAMESDONE] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_NAMESDONE](handle, chan);
 		break;
-	case 372:
-	case 375:
-	case 376:
-	case 422:
+	case 372: /* RPL_MOTD */
+	case 375: /* RPL_MOTDSTART */
+	case 376: /* RPL_ENDOFMOTD */
+	case 422: /* ERR_NOMOTD */
 		datastart = (unsigned char *) strchr((char *) message + 1, ':');
 
 		if (((IRCLIB *) handle)->callbacks[IRCLIB_MOTD] != NULL)
@@ -250,7 +250,7 @@ parse_numeric(void *handle, char *message, split_t *tokens, int numeric)
 				((IRCLIB *) handle)->callbacks[IRCLIB_READY] (handle);
 		}
 		break;
-	case 433:
+	case 433: /* ERR_NICKNAMEINUSE */
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_NICKINUSE] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_NICKINUSE] (handle, tok[3]);
 		break;
