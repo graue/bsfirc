@@ -124,7 +124,7 @@ change_user_mode(char *name, char *chan, int plus, int mode)
 						if(plus == 1) 
 							utr->mode |= MODE_OP;
 						else
-							utr->mode ^= MODE_OP;
+							utr->mode &= ~MODE_OP;
 					}
 
 					break;
