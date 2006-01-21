@@ -21,6 +21,7 @@ void irc_msg (void *h, char *nick, char *host, char *target, char *msg);
 void irc_whois_userhost (void *h, char *nick, char *user, char *host, char *name);
 void irc_whois_channels (void *h, char *nick, char *channels);
 void irc_whois_server (void *h, char *nick, char *server, char *serverdescr);
+void irc_away (void *h, char *nick, char *awaymsg);
 void show_channel_users (char *chan);
 void delete_channel_user (char *name, char *chan);
 void process_quit (char *name, char *msg);

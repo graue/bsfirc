@@ -354,3 +354,12 @@ irc_whois_server(void *h, char *nick, char *server, char *serverdescr)
 	printf("** [%s] on: %s (%s)\n", nick, server, serverdescr);
 	show_prompt();
 }
+
+/* PROTO */
+void
+irc_away(void *h, char *nick, char *awaymsg)
+{
+	eraseline();
+	printf("** [%s] away: %s\n", nick, awaymsg);
+	show_prompt();
+}

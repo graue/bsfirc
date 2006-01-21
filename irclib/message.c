@@ -198,6 +198,11 @@ parse_numeric(void *handle, char *message, split_t *tokens, int numeric)
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_SERVER_NAME] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_SERVER_NAME] (handle, tok[0]+1);
 		break;
+	case 301: /* RPL_AWAY */
+		datastart = (unsigned char *) strchr((char *) message + 1, ':');
+		if (((IRCLIB *)handle)->callbacks[IRCLIB_AWAY] != NULL)
+			((IRCLIB *)handle)->callbacks[IRCLIB_AWAY] (handle, tok[3], datastart+1);
+		break;
 	case 311: /* RPL_WHOISUSER */
 		datastart = (unsigned char *) strchr((char *) message + 1, ':');
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_WHOIS_USERHOST] != NULL)

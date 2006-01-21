@@ -104,6 +104,7 @@ main(int argc, char **argv)
 	irclib_register_callback(bsfirc->handle, IRCLIB_WHOIS_USERHOST, (void (*) (void *,...)) irc_whois_userhost);
 	irclib_register_callback(bsfirc->handle, IRCLIB_WHOIS_SERVER, (void (*) (void *,...)) irc_whois_server);
 	irclib_register_callback(bsfirc->handle, IRCLIB_WHOIS_CHANNELS, (void (*) (void *,...)) irc_whois_channels);
+	irclib_register_callback(bsfirc->handle, IRCLIB_AWAY, (void (*) (void *,...)) irc_away);
 	irclib_register_callback(bsfirc->handle, IRCLIB_ERROR, (void (*) (void *,...)) error_callback);
 	irclib_register_callback(bsfirc->handle, IRCLIB_NICKCHANGE, (void (*) (void *,...)) irc_nickchange);
 
