@@ -1,7 +1,7 @@
 void irclib_join (void *handle, char *channel);
 void irclib_part (void *handle, char *channel);
-void irclib_privmsg (void *handle, char *target, char *message);
 void irclib_notice (void *handle, char *target, char *message);
+void irclib_privmsg (void *handle, char *target, char *message);
 void irclib_quit (void *handle, char *quitmsg);
 void irclib_whois (void *handle, char *nick);
 void irclib_op (void *handle, char *chan, char *nick);
