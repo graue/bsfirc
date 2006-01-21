@@ -136,6 +136,20 @@ parse_command(void *handle, char *message, split_t *tokens)
 		}
 
 		free(target);
+	} else if(strncmp(tok[1], "TOPIC", 5) == 0) {
+		/*
+		 * This is a topic change message. The topic notification
+		 * on joining a new channel is a numeric (see below).
+		 *
+		 * TODO: make it a separate event which displays the nick.
+		 */
+		char *msgptr;
+
+		msgptr = strchr(message, ' ');
+		msgptr = strchr(msgptr+1, ':');
+		
+		if(((IRCLIB *)handle)->callbacks[IRCLIB_TOPIC] != NULL)
+			((IRCLIB *)handle)->callbacks[IRCLIB_TOPIC] (handle, tok[2], msgptr+1);
 	} else if(strncmp(tok[1], "NICK", 4) == 0) {
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_NICKCHANGE] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_NICKCHANGE] (handle, nick, tok[2]+1);
