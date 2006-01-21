@@ -258,6 +258,8 @@ parse_input(void)
 			show_channel_users(inputbuf + 1);
 			return;
 		}
+	} else if (inputbuf[0] == 't') {
+		irclib_topic(bsfirc->handle, bsfirc->lastchan, inputbuf + 1);
 	} else if (inputbuf[0] == 'o') {
 		irclib_op(bsfirc->handle, bsfirc->lastchan, inputbuf + 1);
 	} else if (inputbuf[0] == 'W') {
@@ -278,6 +280,7 @@ parse_input(void)
 		printf("   w              : show who is in the channel\n");
 		printf("   i<nick>        : whois <nick>\n");
 		printf("   W              : show your nickname and server\n");
+		printf("   t<msg>         : set topic on current channel\n");
 		printf("   o<nick>        : op <nick> on current channel\n");
 		printf("   n<nick>        : change your nick to <nick>\n");
 		printf("   q!             : quit");

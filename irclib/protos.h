@@ -5,6 +5,7 @@ void irclib_privmsg (void *handle, char *target, char *message);
 void irclib_quit (void *handle, char *quitmsg);
 void irclib_whois (void *handle, char *nick);
 void irclib_op (void *handle, char *chan, char *nick);
+void irclib_topic (void *handle, char *chan, char *newtopic);
 void           * irclib_create_handle (void);
 void irclib_register_callback (void *handle, int event, void (*ptr) (void *,...));
 int irclib_connected (void *handle);

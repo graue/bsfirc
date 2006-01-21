@@ -117,3 +117,19 @@ irclib_op(void *handle, char *chan, char *nick)
 	send_cmdpkt(handle, pkt);
 	pkt_free(pkt);
 }
+
+/* PROTO */
+void
+irclib_topic(void *handle, char *chan, char *newtopic)
+{
+	pkt_t *pkt;
+
+	pkt = pkt_init(strlen(chan)+strlen(newtopic)+8);
+	pkt_addstr(pkt, "TOPIC ");
+	pkt_addstr(pkt, chan);
+	pkt_addstr(pkt, " :");
+	pkt_addstr(pkt, newtopic);
+
+	send_cmdpkt(handle, pkt);
+	pkt_free(pkt);
+}
