@@ -48,31 +48,33 @@ show_channel_users(char *chan)
 void
 delete_channel_user(char *name, char *chan)
 {
-	struct ChannelList *tr, *p = NULL;
+	struct ChannelList *tr, *clist = NULL;
 	struct UserList *utr, *tmp;
 
 	for(tr = chanlist; tr != NULL; tr = tr->next) {
 		if(strcasecmp(chan, tr->chan) == 0) {
-			p = tr;
+			clist = tr;
 			break;
 		}
 	}
 
-	if(p != NULL) {
-		if(strcasecmp(p->users->name, name) == 0) {
-			tmp = p->users;
-			p->users = p->users->next;
-			free(tmp->name);
-			free(tmp);
-		} else {
-			for(utr = p->users; utr->next != NULL; utr = utr->next) {
-				if(strcasecmp(utr->next->name, name) == 0) {
-					tmp = utr->next;
-					utr->next = utr->next->next;
-					free(tmp->name);
-					free(tmp);
-					break;
-				}
+	/* If the channel is not in our list, nothing to do. */
+	if (clist == NULL)
+		return;
+
+	if(strcasecmp(clist->users->name, name) == 0) {
+		tmp = clist->users;
+		clist->users = clist->users->next;
+		free(tmp->name);
+		free(tmp);
+	} else {
+		for(utr = clist->users; utr->next != NULL; utr = utr->next) {
+			if(strcasecmp(utr->next->name, name) == 0) {
+				tmp = utr->next;
+				utr->next = utr->next->next;
+				free(tmp->name);
+				free(tmp);
+				break;
 			}
 		}
 	}
