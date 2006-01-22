@@ -18,6 +18,8 @@ main(int argc, char **argv)
 	fd_set          readfs;
 	struct timeval  tm;
 
+	sm_static(1); /* static buffers follow */
+
 	ircsrv = getenv("IRCSERVER");
 	if (ircsrv == NULL) {
 		printf("** IRC server: ");
@@ -69,8 +71,8 @@ main(int argc, char **argv)
 
 	bsfirc = malloc(sizeof(struct BSFirc));
 	bsfirc->istyping = 0;
-	bsfirc->lastmsg = 0;
-	bsfirc->lastchan = 0;
+	bsfirc->lastmsg = NULL;
+	bsfirc->lastchan = NULL;
 	bsfirc->ready = 0;
 	bsfirc->server = NULL;
 	bsfirc->lastmsgtype = LAST_MESSAGE_NONE;
@@ -79,6 +81,8 @@ main(int argc, char **argv)
 
 	if (user == NULL)
 		user = strdup("bsfirc");
+
+	sm_static(0); /* end of static buffers */
 
 	bsfirc->handle = (void *) irclib_create_handle();
 	irclib_setnick(bsfirc->handle, ircnick);
@@ -134,6 +138,7 @@ main(int argc, char **argv)
 			get_input();
 		}
 	}
+	/* NOTREACHED */
 }
 
 /* PROTO */

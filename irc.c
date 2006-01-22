@@ -251,13 +251,13 @@ irc_msg(void *h, char *nick, char *host, char *target, char *msg)
 
 	if (bsfirc->istyping == 0) {
 		if (target[0] == '#' || target[0] == '&') {
-			if (bsfirc->lastchan != 0)
+			if (bsfirc->lastchan != NULL)
 				free(bsfirc->lastchan);
 
 			bsfirc->lastchan = strdup(target);
 			bsfirc->lastmsgtype = LAST_MESSAGE_CHANNEL;
 		} else {
-			if (bsfirc->lastmsg != 0)
+			if (bsfirc->lastmsg != NULL)
 				free(bsfirc->lastmsg);
 
 			bsfirc->lastmsg = strdup(nick);

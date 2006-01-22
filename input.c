@@ -160,6 +160,12 @@ parse_input(void)
 		irclib_quit(bsfirc->handle, "Leaving");
 		restore_tty();
 		printf("\n");
+		if (bsfirc->nick)     free(bsfirc->nick);
+		if (bsfirc->server)   free(bsfirc->server);
+		if (bsfirc->lastchan) free(bsfirc->lastchan);
+		if (bsfirc->lastmsg)  free(bsfirc->lastmsg);
+		free_lists();
+		sm_dump(1);
 		exit(-1);
 	} else if (inputbuf[0] == 'i') {
 		irclib_whois(bsfirc->handle, inputbuf + 1);

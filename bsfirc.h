@@ -1,5 +1,8 @@
 #include "irclib/irclib.h"
 
+#include "smartall.h"
+#include "alloc.h"
+
 #ifdef TIMESTAMPS
 #define TIMESTAMPS_CHANMSG
 #endif

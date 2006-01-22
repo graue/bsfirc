@@ -5,6 +5,31 @@ extern struct ChannelList *chanlist;
 
 /* PROTO */
 void
+free_lists(void)
+{
+	struct ChannelList *tr, *next;
+	struct UserList *utr, *unext;
+
+	for (tr = chanlist, next = (tr ? tr->next : NULL);
+		tr != NULL;
+		tr = next, next = (tr ? tr->next : NULL))
+	{
+		for (utr = tr->users, unext = (utr ? utr->next : NULL);
+			utr != NULL;
+			utr = unext, unext = (utr ? utr->next : NULL))
+		{
+			if (utr->name) free(utr->name);
+			free(utr);
+		}
+		if (tr->chan != NULL) free(tr->chan);
+		free(tr);
+	}
+
+	chanlist = NULL;
+}
+
+/* PROTO */
+void
 show_channel_users(char *chan)
 {
 	struct ChannelList *tr;

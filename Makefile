@@ -9,7 +9,10 @@ CC=gcc
 # Add -DBELL_ON_INCOMING to sound an alert when a message
 # 	comes in.
 #
-CFLAGS=-O2 -g3 -pedantic -Wall -DTIMESTAMPS #-DNETSPEAK_CLEANER
+CFLAGS=-O2 -g3 -pedantic -Wall
+CFLAGS+=-DTIMESTAMPS
+#CFLAGS+=-DNETSPEAK_CLEANER
+CFLAGS+=-DSMARTALLOC
 #CFLAGS+=-I/usr/local/djgpp/watt/inc
 #
 # Add -lsocket -lnsl for Solaris
@@ -19,7 +22,7 @@ LIBS=-lirc
 #LIBS+=-lwsock32
 LDFLAGS=-Lirclib/
 #LDFLAGS+=-L/usr/local/djgpp/watt/lib
-OBJECTS=bsfirc.o cleaner.o screen.o output.o irc.o input.o log.o lists.o
+OBJECTS=bsfirc.o cleaner.o screen.o output.o irc.o input.o log.o lists.o alloc.o smartall.o
 
 all:
 	(cd irclib && $(MAKE) $(MFLAGS))
