@@ -293,7 +293,7 @@ irc_msg(void *h, char *nick, char *host, char *target, char *msg)
 		}
 
 		if(!found) {
-			wtmp = malloc(sizeof(struct Waiting));
+			wtmp = xmalloc(sizeof(struct Waiting));
 			wtmp->next = NULL;
 			wtmp->nick = strdup(nick);
 			if(waiting == NULL) {

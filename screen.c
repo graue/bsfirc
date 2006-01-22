@@ -101,7 +101,7 @@ wordwrap_print(char *str, int offset)
 	int             firstline = 1;
 	int             xx = 0, yy, jj;
 
-	linebuf = malloc(screen_cols + 1);
+	linebuf = xmalloc(screen_cols + 1);
 	curline = str;
 
 	for (;;) {
@@ -154,7 +154,7 @@ wordwrap_print_echostr(char *str, char *echostr)
 	int             xx = 0, yy;
 
 	offset = strlen(echostr) + 1;
-	linebuf = malloc(screen_cols + 1);
+	linebuf = xmalloc(screen_cols + 1);
 	curline = str;
 
 	for (;;) {

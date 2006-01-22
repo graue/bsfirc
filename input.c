@@ -183,7 +183,7 @@ parse_input(void)
 			printf("\nNo message to send.\n");
 			return;
 		}
-		dest = malloc(pptr - pptr2 + 1);
+		dest = xmalloc(pptr - pptr2 + 1);
 		dest[pptr - pptr2] = 0;
 		strncpy(dest, pptr2, pptr - pptr2);
 		irclib_privmsg(bsfirc->handle, dest, pptr + 1);

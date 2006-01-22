@@ -69,7 +69,7 @@ main(int argc, char **argv)
 	signal(SIGTSTP, SIG_IGN);
 #endif
 
-	bsfirc = malloc(sizeof(struct BSFirc));
+	bsfirc = xmalloc(sizeof(struct BSFirc));
 	bsfirc->istyping = 0;
 	bsfirc->lastmsg = NULL;
 	bsfirc->lastchan = NULL;

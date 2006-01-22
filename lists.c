@@ -191,7 +191,7 @@ add_channel_user(char *name, char *chan, uint8_t mode)
 	struct UserList *up, *utr;
 
 	if(chanlist == NULL) {
-		chanlist = malloc(sizeof(struct ChannelList));
+		chanlist = xmalloc(sizeof(struct ChannelList));
 		chanlist->chan = strdup(chan);
 		chanlist->next = NULL;
 		chanlist->users = NULL;
@@ -208,7 +208,7 @@ add_channel_user(char *name, char *chan, uint8_t mode)
 
 		if(p == NULL) {
 			for(tr = chanlist; tr->next != NULL; tr = tr->next);
-			tr->next = malloc(sizeof(struct ChannelList));
+			tr->next = xmalloc(sizeof(struct ChannelList));
 			tr->next->chan = strdup(chan);
 			tr->next->next = NULL;
 			tr->next->users = NULL;
@@ -217,7 +217,7 @@ add_channel_user(char *name, char *chan, uint8_t mode)
 	}
 
 	if(p->users == NULL) {
-		p->users = malloc(sizeof(struct UserList));
+		p->users = xmalloc(sizeof(struct UserList));
 		up = p->users;
 		up->next = NULL;
 	} else {
@@ -230,7 +230,7 @@ add_channel_user(char *name, char *chan, uint8_t mode)
 			if(strcasecmp(name, utr->name) < 0)
 				break;
 
-		up = malloc(sizeof(struct UserList));
+		up = xmalloc(sizeof(struct UserList));
 
 		if(utr == NULL) {
 			for(utr = p->users; utr->next != NULL;

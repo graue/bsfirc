@@ -75,7 +75,7 @@ undo_netspeak(char *orig)
 		spcptr++;
 	}
 
-	cleaned = malloc(newlen + 1);
+	cleaned = xmalloc(newlen + 1);
 	cleaned[0] = 0;
 
 	for (x = 0; x < origlen; x++) {
