@@ -39,13 +39,13 @@ i_split(char *str)
 			num++;
 
 	num++;
-	stmp = malloc(sizeof(split_t));
-	stmp->data = malloc(sizeof(uint8_t *) * num);
+	stmp = xmalloc(sizeof(split_t));
+	stmp->data = xmalloc(sizeof(uint8_t *) * num);
 	stmp->num = num;
 
 	for (x = 0, y = 0, cur = 0; x <= len; x++) {
 		if (str[x] == ' ' || x == len) {
-			stmp->data[cur] = malloc(x - y + 1);
+			stmp->data[cur] = xmalloc(x - y + 1);
 			memcpy(stmp->data[cur], str + y, x - y);
 			stmp->data[cur][x - y] = 0;
 			y = x + 1;

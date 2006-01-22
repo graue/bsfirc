@@ -1,3 +1,6 @@
+void * xmalloc (size_t size);
+void * xrealloc (void *ptr, size_t size);
+char * xstrdup (const char *s);
 void irclib_join (void *handle, char *channel);
 void irclib_part (void *handle, char *channel);
 void irclib_notice (void *handle, char *target, char *message);

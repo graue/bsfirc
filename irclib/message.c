@@ -60,7 +60,7 @@ parse_command(void *handle, char *message, split_t *tokens)
 
 	if (strchr((char *) from, '!') != NULL) {
 		len = chrdist((char *) from, '!');
-		nick = malloc(len + 1);
+		nick = xmalloc(len + 1);
 		memcpy(nick, from, len);
 		nick[len] = 0;
 		host = strchr((char *) from, '!');
@@ -120,7 +120,7 @@ parse_command(void *handle, char *message, split_t *tokens)
 		if(tok[2][0] == '#' || tok[2][0] == '&')
 			target = tolower_str(tok[2]);
 		else
-			target = strdup(tok[2]);
+			target = xstrdup(tok[2]);
 
 		if(msgptr[1] == 0x01 && msgptr[strlen(msgptr)-1] == 0x01) {
 			/*

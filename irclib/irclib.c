@@ -25,7 +25,7 @@ irclib_create_handle(void)
 
 	endianness = getbyteorder();
 
-	h = malloc(sizeof(struct IRCLib));
+	h = xmalloc(sizeof(struct IRCLib));
 
 	h->sock = -1;
 	h->data = NULL;
@@ -41,20 +41,20 @@ irclib_create_handle(void)
 		h->callbacks[xx] = NULL;
 
 	if (handles == NULL) {
-		handles = malloc(sizeof(IRCLIB_HANDLES));
+		handles = xmalloc(sizeof(IRCLIB_HANDLES));
 		handles->handle = h;
 		handles->next = NULL;
 	} else {
 		for (tmp = handles; tmp->next != NULL; tmp = tmp->next);
 
-		tmp->next = malloc(sizeof(IRCLIB_HANDLES));
+		tmp->next = xmalloc(sizeof(IRCLIB_HANDLES));
 		tmp->next->next = NULL;
 		tmp->next->handle = h;
 	}
 
 	irclib_setnick((void *) h, "NoName");
-	h->realname = strdup("IRClib User");
-	h->username = strdup("irclib");
+	h->realname = xstrdup("IRClib User");
+	h->username = xstrdup("irclib");
 
 	return (void *) h;
 }
@@ -82,7 +82,7 @@ irclib_setnick(void *handle, char *nickname)
 	if (((IRCLIB *) handle)->nickname != NULL)
 		free(((IRCLIB *) handle)->nickname);
 
-	((IRCLIB *) handle)->nickname = strdup(nickname);
+	((IRCLIB *) handle)->nickname = xstrdup(nickname);
 
 	if (((IRCLIB *) handle)->connected == 1) {
 		nickpkt = pkt_init(7 + strlen(nickname));
@@ -103,7 +103,7 @@ irclib_setname(void *handle, char *name)
 	if(((IRCLIB *)handle)->realname != NULL)
 		free(((IRCLIB *)handle)->realname);
 
-	((IRCLIB *)handle)->realname = strdup(name);
+	((IRCLIB *)handle)->realname = xstrdup(name);
 }
 
 /* PROTO */
@@ -113,7 +113,7 @@ irclib_setusername(void *handle, char *name)
 	if(((IRCLIB *)handle)->username != NULL)
 		free(((IRCLIB *)handle)->username);
 
-	((IRCLIB *)handle)->username = strdup(name);
+	((IRCLIB *)handle)->username = xstrdup(name);
 }
 
 /* PROTO */
@@ -161,7 +161,7 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 
 			if (tmp->handle->waiting_len > 0) {
 				tmp->handle->data_len = tmp->handle->waiting_len + bytesread;
-				tmp->handle->data = malloc(tmp->handle->data_len + 1);
+				tmp->handle->data = xmalloc(tmp->handle->data_len + 1);
 				memcpy(tmp->handle->data, tmp->handle->buffered, tmp->handle->waiting_len);
 				memcpy(tmp->handle->data + tmp->handle->waiting_len, recvbuf, bytesread);
 				tmp->handle->data[tmp->handle->data_len] = 0;
@@ -171,7 +171,7 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 
 			} else {
 				tmp->handle->data_len = bytesread;
-				tmp->handle->data = malloc(bytesread + 1);
+				tmp->handle->data = xmalloc(bytesread + 1);
 				memcpy(tmp->handle->data, recvbuf, bytesread);
 				tmp->handle->data[tmp->handle->data_len] = 0;
 			}
@@ -194,13 +194,13 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 					nocr = 0;
 
 				if (nextcr == 0) {
-					tmp->handle->buffered = malloc(tmp->handle->data_len - bytesparsed + 1);
+					tmp->handle->buffered = xmalloc(tmp->handle->data_len - bytesparsed + 1);
 					tmp->handle->waiting_len = tmp->handle->data_len - bytesparsed;
 					memcpy(tmp->handle->buffered, bufptr, tmp->handle->data_len - bytesparsed);
 					tmp->handle->buffered[tmp->handle->waiting_len] = 0;
 					break;
 				}
-				messagestr = malloc(nextcr + 1);
+				messagestr = xmalloc(nextcr + 1);
 				memcpy(messagestr, bufptr, nextcr);
 				messagestr[nextcr] = 0;
 

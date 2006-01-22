@@ -35,7 +35,7 @@ tolower_str(const char *orig)
 	int len = strlen(orig);
 	size_t x;
 
-	ns = malloc(len+1);
+	ns = xmalloc(len+1);
 	for(x = 0; x < len; x++)
 		ns[x] = tolower(orig[x]);
 

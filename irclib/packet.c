@@ -50,8 +50,8 @@ pkt_init(size_t len)
 {
 	pkt_t          *pkt = NULL;
 
-	pkt = malloc((size_t) sizeof(struct IRCLib_Packet));
-	pkt->data = malloc(len);
+	pkt = xmalloc((size_t) sizeof(struct IRCLib_Packet));
+	pkt->data = xmalloc(len);
 	pkt->len = len;
 	pkt->offset = 0;
 
@@ -91,7 +91,7 @@ pkt_initP(uint8_t * data, uint16_t len)
 {
 	pkt_t          *pkt;
 
-	pkt = malloc(sizeof(struct IRCLib_Packet));
+	pkt = xmalloc(sizeof(struct IRCLib_Packet));
 	pkt->data = data;
 	pkt->len = (size_t) len;
 	pkt->offset = 0;
@@ -261,7 +261,7 @@ pkt_getraw(pkt_t * pkt, size_t len)
 {
 	uint8_t        *buf;
 
-	buf = malloc(len);
+	buf = xmalloc(len);
 	memcpy(buf, pkt->data + pkt->offset, len);
 
 	pkt->offset += (uint16_t) len;
@@ -275,7 +275,7 @@ pkt_getstr(pkt_t * pkt, size_t len)
 {
 	uint8_t        *buf;
 
-	buf = malloc(len + 1);
+	buf = xmalloc(len + 1);
 	memcpy(buf, pkt->data + pkt->offset, len);
 	pkt->offset += (uint16_t) len;
 	buf[len] = 0;
