@@ -26,7 +26,7 @@ main(int argc, char **argv)
 		fflush(stdout);
 		fgets(inputbuf, sizeof(inputbuf), stdin);
 		chomp(inputbuf);
-		ircsrv = strdup(inputbuf);
+		ircsrv = xstrdup(inputbuf);
 	}
 	ircnick = getenv("IRCNICK");
 	if (ircnick == NULL) {
@@ -34,11 +34,11 @@ main(int argc, char **argv)
 		fflush(stdout);
 		fgets(inputbuf, sizeof(inputbuf), stdin);
 		chomp(inputbuf);
-		ircnick = strdup(inputbuf);
+		ircnick = xstrdup(inputbuf);
 	}
 	ircname = getenv("IRCNAME");
 	if (ircname == NULL) {
-		ircname = strdup("bsfirc user");
+		ircname = xstrdup("bsfirc user");
 	}
 
 	/*
@@ -80,7 +80,7 @@ main(int argc, char **argv)
 	user = getenv("USER");
 
 	if (user == NULL)
-		user = strdup("bsfirc");
+		user = xstrdup("bsfirc");
 
 	sm_static(0); /* end of static buffers */
 
@@ -88,7 +88,7 @@ main(int argc, char **argv)
 	irclib_setnick(bsfirc->handle, ircnick);
 	irclib_setname(bsfirc->handle, ircname);
 	irclib_setusername(bsfirc->handle, user);
-	bsfirc->nick = strdup(ircnick);
+	bsfirc->nick = xstrdup(ircnick);
 
 	irclib_register_callback(bsfirc->handle, IRCLIB_MOTD, (void (*) (void *,...)) irc_motd);
 	irclib_register_callback(bsfirc->handle, IRCLIB_READY, (void (*) (void *,...)) irc_ready);

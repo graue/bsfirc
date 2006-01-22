@@ -170,7 +170,7 @@ change_user_nick(char *old, char *new)
 		for(utr = tr->users; utr != NULL; utr = utr->next) {
 			if(strcasecmp(old, utr->name) == 0) {
 				free(utr->name);
-				utr->name = strdup(new);
+				utr->name = xstrdup(new);
 				break;
 			}
 		}
@@ -179,7 +179,7 @@ change_user_nick(char *old, char *new)
 	/* If it's me, I need to know what my new nick is. */
 	if (strcasecmp(old, bsfirc->nick) == 0) {
 		free(bsfirc->nick);
-		bsfirc->nick = strdup(new);
+		bsfirc->nick = xstrdup(new);
 	}
 }
 
@@ -192,7 +192,7 @@ add_channel_user(char *name, char *chan, uint8_t mode)
 
 	if(chanlist == NULL) {
 		chanlist = xmalloc(sizeof(struct ChannelList));
-		chanlist->chan = strdup(chan);
+		chanlist->chan = xstrdup(chan);
 		chanlist->next = NULL;
 		chanlist->users = NULL;
 		p = chanlist;
@@ -209,7 +209,7 @@ add_channel_user(char *name, char *chan, uint8_t mode)
 		if(p == NULL) {
 			for(tr = chanlist; tr->next != NULL; tr = tr->next);
 			tr->next = xmalloc(sizeof(struct ChannelList));
-			tr->next->chan = strdup(chan);
+			tr->next->chan = xstrdup(chan);
 			tr->next->next = NULL;
 			tr->next->users = NULL;
 			p = tr->next;
@@ -251,6 +251,6 @@ add_channel_user(char *name, char *chan, uint8_t mode)
 		}
 	}
 
-	up->name = strdup(name);
+	up->name = xstrdup(name);
 	up->mode = mode;
 }

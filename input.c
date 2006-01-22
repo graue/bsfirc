@@ -191,12 +191,12 @@ parse_input(void)
 		if (dest[0] == '#' || dest[0] == '&') {
 			if (bsfirc->lastchan != NULL)
 				free(bsfirc->lastchan);
-			bsfirc->lastchan = strdup(dest);
+			bsfirc->lastchan = xstrdup(dest);
 			bsfirc->lastmsgtype = LAST_MESSAGE_CHANNEL;
 		} else {
 			if (bsfirc->lastmsg != NULL)
 				free(bsfirc->lastmsg);
-			bsfirc->lastmsg = strdup(dest);
+			bsfirc->lastmsg = xstrdup(dest);
 			bsfirc->lastmsgtype = LAST_MESSAGE_PRIVATE;
 		}
 

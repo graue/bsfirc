@@ -45,7 +45,7 @@ irc_server_name(void *h, char *name)
 	if(bsfirc->server != NULL)
 		free(bsfirc->server);
 
-	bsfirc->server = strdup(name);
+	bsfirc->server = xstrdup(name);
 }
 
 /* PROTO */
@@ -64,7 +64,7 @@ irc_join(void *h, char *nick, char *host, char *channel)
 		if(bsfirc->lastchan != NULL)
 			free(bsfirc->lastchan);
 
-		bsfirc->lastchan = strdup(channel);
+		bsfirc->lastchan = xstrdup(channel);
 		bsfirc->lastmsgtype = LAST_MESSAGE_CHANNEL;
 	}
 
@@ -137,7 +137,7 @@ irc_nickinuse(void *h, char *nick)
 	printf("** %s: Nickname already in use.\n", nick);
 
 	if(bsfirc->ready == 0) {
-		char *newnick = strdup(nick);
+		char *newnick = xstrdup(nick);
 		do {
 		notreallyrandomvalue = (size_t)time(NULL) % strlen(bsfirc->nick);
 		} while(notreallyrandomvalue > 26);
@@ -254,13 +254,13 @@ irc_msg(void *h, char *nick, char *host, char *target, char *msg)
 			if (bsfirc->lastchan != NULL)
 				free(bsfirc->lastchan);
 
-			bsfirc->lastchan = strdup(target);
+			bsfirc->lastchan = xstrdup(target);
 			bsfirc->lastmsgtype = LAST_MESSAGE_CHANNEL;
 		} else {
 			if (bsfirc->lastmsg != NULL)
 				free(bsfirc->lastmsg);
 
-			bsfirc->lastmsg = strdup(nick);
+			bsfirc->lastmsg = xstrdup(nick);
 			bsfirc->lastmsgtype = LAST_MESSAGE_PRIVATE;
 		}
 	}
@@ -295,7 +295,7 @@ irc_msg(void *h, char *nick, char *host, char *target, char *msg)
 		if(!found) {
 			wtmp = xmalloc(sizeof(struct Waiting));
 			wtmp->next = NULL;
-			wtmp->nick = strdup(nick);
+			wtmp->nick = xstrdup(nick);
 			if(waiting == NULL) {
 				waiting = wtmp;
 			} else {
