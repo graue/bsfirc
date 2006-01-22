@@ -175,6 +175,12 @@ change_user_nick(char *old, char *new)
 			}
 		}
 	}
+
+	/* If it's me, I need to know what my new nick is. */
+	if (strcasecmp(old, bsfirc->nick) == 0) {
+		free(bsfirc->nick);
+		bsfirc->nick = strdup(new);
+	}
 }
 
 /* PROTO */

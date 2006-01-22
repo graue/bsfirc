@@ -247,8 +247,11 @@ parse_input(void)
 	} else if (inputbuf[0] == 'j') {
 		irclib_join(bsfirc->handle, inputbuf + 1);
 	} else if (inputbuf[0] == 'n') {
-		free(bsfirc->nick);
-		bsfirc->nick = strdup(inputbuf+1);
+		/*
+		 * Keep bsfirc->nick the same for now, since the nick
+		 * change might fail. It isn't effective until the server
+		 * tells us.
+		 */
 		irclib_setnick(bsfirc->handle, inputbuf+1);
 	} else if (inputbuf[0] == 'p') {
 		irclib_part(bsfirc->handle, inputbuf + 1);
