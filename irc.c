@@ -176,7 +176,7 @@ irc_ctcp(void *h, char *nick, char *host, char *target, char *msg)
 		wordwrap_print(msg+7, offset);
 	}
 	else if(strcmp(msg, "VERSION") == 0)
-		irclib_notice(h, nick, "\001VERSION bsfirc\001");
+		irclib_notice(h, nick, "\001VERSION bsfirc 0.0\001");
 
 	show_prompt();
 }
