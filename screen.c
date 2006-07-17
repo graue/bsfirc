@@ -101,7 +101,6 @@ wordwrap_print(char *str, int offset)
 	int             firstline = 1;
 	int             xx = 0, yy, jj;
 
-	linebuf = xmalloc(screen_cols + 1);
 	curline = str;
 
 	for (;;) {
@@ -118,9 +117,12 @@ wordwrap_print(char *str, int offset)
 			else
 				yy++;
 
-		if (yy > (screen_cols - offset - 1)) {
-			memset(linebuf, 0, screen_cols + 1);
+		if (yy > (screen_cols - offset - 4)) {
+			linebuf = xmalloc(xx + 1);
+
 			strncpy(linebuf, curline, xx);
+			linebuf[xx] = 0;
+
 			if (!firstline) {
 				for (jj = 0; jj < offset; jj++)
 					putchar(' ');
@@ -131,6 +133,7 @@ wordwrap_print(char *str, int offset)
 			printf("%s\n", linebuf);
 			curline += xx + 1;
 			xx = 0;
+			free(linebuf);
 			continue;
 		}
 		xx++;
@@ -141,7 +144,6 @@ wordwrap_print(char *str, int offset)
 			putchar(' ');
 
 	printf("%s\n", curline);
-	free(linebuf);
 }
 
 /* PROTO */
@@ -154,7 +156,6 @@ wordwrap_print_echostr(char *str, char *echostr)
 	int             xx = 0, yy;
 
 	offset = strlen(echostr) + 1;
-	linebuf = xmalloc(screen_cols + 1);
 	curline = str;
 
 	for (;;) {
@@ -171,18 +172,22 @@ wordwrap_print_echostr(char *str, char *echostr)
 			else
 				yy++;
 
-		if (yy > (screen_cols - offset - 1)) {
-			memset(linebuf, 0, screen_cols + 1);
+		if (yy > (screen_cols - offset - 3)) {
+			linebuf = xmalloc(xx + 1);
+
 			strncpy(linebuf, curline, xx);
+			linebuf[xx] = 0;
+
 			printf("%s %s\n", echostr, linebuf);
 			curline += xx + 1;
 			xx = 0;
+
+			free(linebuf);
 			continue;
 		}
 		xx++;
 	}
 
 	printf("%s %s\n", echostr, curline);
-	free(linebuf);
 }
 
