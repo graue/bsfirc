@@ -133,3 +133,17 @@ irclib_topic(void *handle, char *chan, char *newtopic)
 	send_cmdpkt(handle, pkt);
 	pkt_free(pkt);
 }
+
+/* PROTO */
+void
+irclib_away(void *handle, char *awaymsg)
+{
+	pkt_t *pkt;
+
+	pkt = pkt_init(strlen(awaymsg)+6);
+	pkt_addstr(pkt, "AWAY :");
+	pkt_addstr(pkt, awaymsg);
+
+	send_cmdpkt(handle, pkt);
+	pkt_free(pkt);
+}
