@@ -184,6 +184,12 @@ parse_command(void *handle, char *message, split_t *tokens)
 
 				argnum++;
 			}
+			else if(tok[3][pos] == 'v') {
+				if(((IRCLIB *)handle)->callbacks[IRCLIB_MODE] != NULL)
+					((IRCLIB *)handle)->callbacks[IRCLIB_MODE] (handle, fromptr, host, tok[2], plus, C_MODE_VOICE, tok[4+argnum]);
+
+				argnum++;
+			}
 		}
 	} else if(strncmp(tok[1], "QUIT", 4) == 0) {
 		char *msgptr;

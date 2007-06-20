@@ -110,6 +110,7 @@ enum {
 
 enum {
 	C_MODE_OP,
+	C_MODE_VOICE,
 	C_MODE_BAN
 };
 

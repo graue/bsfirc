@@ -188,6 +188,12 @@ irc_mode(void *h, char *nick, char *host, char *target, int plus, int mode, char
 	eraseline();
 
 	switch(mode) {
+	case C_MODE_VOICE:
+		change_user_mode(arg, target, plus, C_MODE_VOICE);
+		printf("** ");
+		addts();
+		printf(" %s has been %s on %s by %s.\n", arg, (plus == 1 ? "voiced" : "devoiced"), target, nick);
+		break;
 	case C_MODE_OP:
 		change_user_mode(arg, target, plus, C_MODE_OP);
 		printf("** ");

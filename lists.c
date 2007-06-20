@@ -151,6 +151,13 @@ change_user_mode(char *name, char *chan, int plus, int mode)
 						else
 							utr->mode &= ~MODE_OP;
 					}
+					else if(mode == C_MODE_VOICE) {
+						if(plus == 1) 
+							utr->mode |= MODE_VOICE;
+						else
+							utr->mode &=
+							    ~MODE_VOICE;
+					}
 
 					break;
 				}
