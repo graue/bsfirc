@@ -14,14 +14,22 @@
 
 /* PROTO */
 void
-irclib_join(void *handle, char *channel)
+irclib_join(void *handle, char *channel, char *key)
 {
 	pkt_t          *pkt;
+	int pktlen;
 
-	pkt = pkt_init(5 + strlen(channel));
+	pktlen = 5 + strlen(channel);
+	if (key != NULL)
+		pktlen += 1 + strlen(key);
+	pkt = pkt_init(pktlen);
 
 	pkt_addstr(pkt, "JOIN ");
 	pkt_addstr(pkt, channel);
+	if (key != NULL) {
+		pkt_addstr(pkt, " ");
+		pkt_addstr(pkt, key);
+	}
 
 	send_cmdpkt(handle, pkt);
 	pkt_free(pkt);

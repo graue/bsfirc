@@ -245,7 +245,23 @@ parse_input(void)
 		free(dest);
 		return;
 	} else if (inputbuf[0] == 'j') {
-		irclib_join(bsfirc->handle, inputbuf + 1);
+		char *key;
+		char *chan;
+
+		key = chan = inputbuf+1;
+		while (*key && !isspace(*key))
+			key++;
+		if (key == '\0')
+			key = NULL;
+		else {
+			*key = '\0';
+			key++;
+			while (isspace(*key))
+				key++;
+			if (*key == '\0')
+				key = NULL;
+		}
+		irclib_join(bsfirc->handle, chan, key);
 	} else if (inputbuf[0] == 'n') {
 		/*
 		 * Keep bsfirc->nick the same for now, since the nick

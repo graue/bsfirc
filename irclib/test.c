@@ -32,7 +32,7 @@ void
 irc_ready(void *handle)
 {
 	printf("** Ready.\n");
-	irclib_join(handle, "#irclib");
+	irclib_join(handle, "#irclib", NULL);
 }
 
 void 
