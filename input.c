@@ -157,7 +157,8 @@ void
 parse_input(void)
 {
 	if (strncasecmp(inputbuf, "q!", 2) == 0) {
-		irclib_quit(bsfirc->handle, "Leaving");
+		irclib_quit(bsfirc->handle,
+			inputbuf[2] ? &inputbuf[2] : "Leaving");
 		restore_tty();
 		printf("\n");
 		if (bsfirc->nick)     free(bsfirc->nick);
