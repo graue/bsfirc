@@ -123,8 +123,8 @@ irclib_select(int nfds, fd_set * readfds, fd_set * writefds, fd_set * exceptfds,
 	IRCLIB_HANDLES *tmp;
 	IRCLIB_RET      ret = IRCLIB_RET_OK;
 
-	size_t          bytesread, bytesparsed;
-	size_t          nextcr, nextnl;
+	ssize_t         bytesread, bytesparsed;
+	ssize_t         nextcr, nextnl;
 	int             nocr;
 	int             maxfd = nfds;
 	unsigned char   recvbuf[513];
