@@ -247,7 +247,9 @@ parse_numeric(void *handle, char *message, split_t *tokens, int numeric)
 		break;
 	case 353: /* RPL_NAMREPLY */
 		chan = tok[4];
-		for(x = 5; x < (tokens->num-1); x++) {
+		for(x = 5; x < (tokens->num); x++) {
+			if(tok[x][0] == '\0')
+				continue;
 			if(((IRCLIB *)handle)->callbacks[IRCLIB_CHANUSER] != NULL) {
 				if(tok[x][0] == ':')
 					((IRCLIB *)handle)->callbacks[IRCLIB_CHANUSER](handle, chan, tok[x]+1);
