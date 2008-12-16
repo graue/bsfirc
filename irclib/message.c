@@ -151,8 +151,12 @@ parse_command(void *handle, char *message, split_t *tokens)
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_TOPIC] != NULL)
 			((IRCLIB *)handle)->callbacks[IRCLIB_TOPIC] (handle, tok[2], msgptr+1);
 	} else if(strncmp(tok[1], "NICK", 4) == 0) {
+		const char *newnick;
+
+		/* sometimes nickname will have a : in front, sometimes not */
+		newnick = (tok[2][0] == ':') ? tok[2]+1 : tok[2];
 		if(((IRCLIB *)handle)->callbacks[IRCLIB_NICKCHANGE] != NULL)
-			((IRCLIB *)handle)->callbacks[IRCLIB_NICKCHANGE] (handle, nick, tok[2]+1);
+			((IRCLIB *)handle)->callbacks[IRCLIB_NICKCHANGE] (handle, nick, newnick);
 	} else if(strncmp(tok[1], "MODE", 4) == 0) {
 		int plus = 1;
 		char *fromptr;
