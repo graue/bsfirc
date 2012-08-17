@@ -1,6 +1,10 @@
-This version of bsfirc has been changed by Graue <graue@oceanbase.org>.
-Graue's changes are in the public domain. The rest is under this
-license:
+This version of bsfirc has been modified extensively by Scott Feeney
+<scott@oceanbase.org> from 2005-2008, who releases his changes under
+the CC0 Public Domain Dedication, as published by Creative Commons:
+<http://creativecommons.org/publicdomain/zero/1.0/>
+
+Except where otherwise noted, the following license applies:
+
 
 Copyright (C) 2003-2005, Claudio Leite
 All rights reserved.
